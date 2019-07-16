@@ -1,6 +1,6 @@
 # asdf-kubeval
 
-[![Build Status](https://travis-ci.com/looztra/asdf-velero.svg?branch=master)](https://travis-ci.com/looztra/asdf-velero)
+[![Build Status](https://travis-ci.org/looztra/asdf-velero.svg?branch=master)](https://travis-ci.org/looztra/asdf-velero)
 
 [velero](https://github.com/heptio/velero) plugin for the [asdf](https://github.com/asdf-vm/asdf) version manager.
 
