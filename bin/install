@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# https://github.com/heptio/velero/releases/download/v1.0.0/velero-v1.0.0-linux-amd64.tar.gz
+
+set -e
+set -o pipefail
+
+install_velero() {
+  local install_type=$1
+  local version=$2
+  local install_path=$3
+  local platform="$(uname | tr '[:upper:]' '[:lower:]')-amd64"
+  local bin_install_path="$install_path/bin"
+  local binary_path="$bin_install_path/velero"
+  local download_url=$(get_download_url $version $platform)
+
+  if [ "$TMPDIR" = "" ]; then
+    local tmp_download_dir=$(mktemp -d -t velero_XXXXXX)
+  else
+    local tmp_download_dir=$TMPDIR
+  fi
+
+  local download_path="$tmp_download_dir/$(get_filename $version $platform)"
+
+  echo "Downloading velero from ${download_url} to ${download_path}"
+  curl -Lo $download_path $download_url
+
+  echo "Creating bin directory"
+  mkdir -p "${bin_install_path}"
+
+  echo "Cleaning previous binaries"
+  rm -f $binary_path 2>/dev/null || true
+
+  echo "Extracting archive"
+  tar xpf $download_path -C $tmp_download_dir
+  echo "Copying binary"
+  cp "${tmp_download_dir}/velero-${version}-${platform}/velero" ${binary_path}
+  chmod +x ${binary_path}
+
+  echo "Cleaning tmp download dir"
+  rm -rf $tmp_download_dir || true
+}
+
+get_filename() {
+  local version="$1"
+  local platform="$2"
+
+  echo "velero-${version}-${platform}.tar.gz"
+}
+
+get_download_url() {
+  local version="$1"
+  local platform="$2"
+  local filename
+  filename="$(get_filename "$version" "$platform")"
+
+  echo "https://github.com/heptio/velero/releases/download/${version}/${filename}"
+}
+
+install_velero $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
