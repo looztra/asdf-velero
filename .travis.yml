@@ -1,11 +1,13 @@
 language: c
+env:
+  - TOOL_NAME=velero TOOL_VERSION=v1.0.0
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git
   - . asdf/asdf.sh
 script:
-  - asdf plugin-add velero ./
-  - asdf list-all velero
-  - asdf plugin-test velero ./ --asdf-tool-version v1.0.0
+  - asdf plugin-add $TOOL_NAME ./
+  - asdf list-all $TOOL_NAME
+  - asdf plugin-test $TOOL_NAME ./ --asdf-tool-version $TOOL_VERSION
 os:
   - linux
   - osx

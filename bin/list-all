@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # https://github.com/heptio/velero/releases/download/v1.0.0/velero-v1.0.0-linux-amd64.tar.gz
-
-releases_path=https://api.github.com/repos/heptio/velero/releases
+github_coordinates=heptio/velero
+releases_path="https://api.github.com/repos/${github_coordinates}/releases"
 cmd="curl -s"
 if [ -n "$GITHUB_API_TOKEN" ]; then
   cmd="$cmd -H 'Authorization: token $GITHUB_API_TOKEN'"
