@@ -1,0 +1,11 @@
+language: c
+before_script:
+  - git clone https://github.com/asdf-vm/asdf.git
+  - . asdf/asdf.sh
+script:
+  - asdf plugin-add velero ./
+  - asdf list-all velero
+  - asdf plugin-test velero ./ --asdf-tool-version v1.0.0
+os:
+  - linux
+  - osx
