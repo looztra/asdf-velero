@@ -1,4 +1,4 @@
-# asdf-kubeval
+# asdf-velero
 
 [![Build Status](https://travis-ci.org/looztra/asdf-velero.svg?branch=master)](https://travis-ci.org/looztra/asdf-velero)
 
