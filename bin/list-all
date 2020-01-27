@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# https://github.com/heptio/velero/releases/download/v1.0.0/velero-v1.0.0-linux-amd64.tar.gz
-github_coordinates=heptio/velero
+# https://github.com/vmware-tanzu/velero/releases/download/v1.0.0/velero-v1.0.0-linux-amd64.tar.gz
+github_coordinates=vmware-tanzu/velero
 releases_path="https://api.github.com/repos/${github_coordinates}/releases"
 cmd="curl -s"
 if [ -n "$GITHUB_API_TOKEN" ]; then
