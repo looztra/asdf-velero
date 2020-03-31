@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/looztra/asdf-velero.svg?branch=master)](https://travis-ci.org/looztra/asdf-velero)
 
-[velero](https://github.com/heptio/velero) plugin for the [asdf](https://github.com/asdf-vm/asdf) version manager.
+[velero](https://github.com/vmware-tanzu/velero) plugin for the [asdf](https://github.com/asdf-vm/asdf) version manager.
 
 ## Install
 
