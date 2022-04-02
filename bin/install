@@ -5,7 +5,7 @@ set -o pipefail
 
 install_tool() {
   #local install_type=$1
-  local version=$2
+  local version="${2/v/}"
   local install_path=$3
   local tmp_download_dir=$4
   local binary_name=$5
@@ -43,7 +43,7 @@ get_binary_path_in_archive(){
   local version=$3
   local platform=$4
 
-  echo "$archive_dir/$binary_name-${version}-${platform}/$binary_name"
+  echo "$archive_dir/$binary_name-v${version}-${platform}/$binary_name"
 }
 
 get_platform() {
@@ -55,7 +55,7 @@ get_filename() {
   local platform="$2"
   local binary_name="$3"
 
-  echo "${binary_name}-${version}-${platform}.tar.gz"
+  echo "${binary_name}-v${version}-${platform}.tar.gz"
 }
 
 get_download_url() {
@@ -65,7 +65,7 @@ get_download_url() {
   local filename
   filename="$(get_filename "$version" "$platform" "$binary_name")"
 
-  echo "https://github.com/vmware-tanzu/velero/releases/download/${version}/${filename}"
+  echo "https://github.com/vmware-tanzu/velero/releases/download/v${version}/${filename}"
 }
 
 tmp_download_dir="$(mktemp -d -t 'asdf_XXXXXXXX')"
