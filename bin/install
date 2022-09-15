@@ -48,12 +48,17 @@ get_binary_path_in_archive(){
 
 get_platform() {
   arch=$(uname -m)
-  case $arch in
-    armv*) arch="arm";;
-    arm64) arch="arm64";; # m1 macs
-    aarch64) arch="arm64";;
-    *) arch="amd64";;
-  esac
+  kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
+  if [ "$kernel_name" == "linux" ]; then 
+    case $arch in
+      armv*) arch="arm";;
+      arm64) arch="arm64";; # m1 macs
+      aarch64) arch="arm64";;
+      *) arch="amd64";;
+    esac
+  else # darwin
+    arch="amd64"
+  fi
   echo "$(uname | tr '[:upper:]' '[:lower:]')-${arch}"
 }
 
