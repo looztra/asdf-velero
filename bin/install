@@ -16,7 +16,7 @@ install_tool() {
   local download_url
   local download_path
 
-  platform=$(get_platform)
+  platform=$(get_platform "$version")
   download_url=$(get_download_url "$version" "$platform" "$binary_name")
   download_path="$tmp_download_dir/"$(get_filename "$version" "$platform" "$binary_name")
 
@@ -46,10 +46,19 @@ get_binary_path_in_archive(){
   echo "$archive_dir/$binary_name-v${version}-${platform}/$binary_name"
 }
 
+verlte() {
+    printf '%s\n' "$1" "$2" | sort -C -V
+}
+
+verlt() {
+    ! verlte "$2" "$1"
+}
+
 get_platform() {
+  local version="$1"
   arch=$(uname -m)
   kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
-  if [ "$kernel_name" == "linux" ]; then 
+  if [ "$kernel_name" == "linux" ]; then
     case $arch in
       armv*) arch="arm";;
       arm64) arch="arm64";; # m1 macs
@@ -57,7 +66,11 @@ get_platform() {
       *) arch="amd64";;
     esac
   else # darwin
-    arch="amd64"
+    if verlt $version "1.11.1"; then # first version to get Apple Silicon build
+      arch="amd64"
+    else
+      arch="arm64"
+    fi
   fi
   echo "$(uname | tr '[:upper:]' '[:lower:]')-${arch}"
 }
